@@ -100,18 +100,12 @@ particlesJS("particles-js", {
   });
   
   //transform the images icons
-  var iconContainer = document.querySelector(".icon-container");
-
-  iconContainer.addEventListener("click", function() {
-    var icon = document.getElementById("icon");
+  document.getElementById("icon").addEventListener("click", function() {
     var image = document.getElementById("image");
-    
-    if (image.style.visibility === "visible") {
-      image.style.visibility = "hidden"; // Hide the image if it's visible
-      icon.style.visibility = "visible"; // Show the icon
+    if (image.style.transform === "rotateY(180deg)") {
+      image.style.transform = "rotateY(0deg)";
     } else {
-      image.style.visibility = "visible"; // Show the image if it's hidden
-      icon.style.visibility = "hidden"; // Hide the icon
+      image.style.transform = "rotateY(180deg)";
     }
   });
   
