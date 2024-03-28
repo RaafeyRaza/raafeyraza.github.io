@@ -99,3 +99,13 @@ particlesJS("particles-js", {
     "retina_detect": true
   });
   
+  //transform the images icons
+  document.getElementById("icon").addEventListener("click", function() {
+    var image = document.getElementById("image");
+    if (image.style.transform === "rotateY(180deg)") {
+      image.style.transform = "rotateY(0deg)";
+    } else {
+      image.style.transform = "rotateY(180deg)";
+    }
+  });
+  
