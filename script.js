@@ -1,17 +1,18 @@
+
     particlesJS("particles-js", {
         "particles": {
             "number": {
-                "value": 200,
+                "value": 80,
                 "density": {
                     "enable": true,
                     "value_area": 800
                 }
             },
             "color": {
-                "value": "#000000" // White particles
+                "value": "#ffffff" // White particles
             },
             "shape": {
-                "type": "polygon",
+                "type": "circle",
                 "stroke": {
                     "width": 0,
                     "color": "#000000"
@@ -35,9 +36,17 @@
                     "sync": false
                 }
             },
+
+            "line_linked": {
+                "enable": true,
+                "distance": 150,
+                "color": "#ffffff", // White connections
+                "opacity": 0.4,
+                "width": 1
+            },
             "size": {
-                "value": 1,
-                "random": true,
+                "value": 3, // Fixed size value
+                "random": false, // Disable random size variation
                 "anim": {
                     "enable": false,
                     "speed": 40,
@@ -45,16 +54,9 @@
                     "sync": false
                 }
             },
-            "line_linked": {
-                "enable": true,
-                "distance": 150,
-                "color": "#000000", // White connections
-                "opacity": 0.4,
-                "width": 1
-            },
             "move": {
                 "enable": true,
-                "speed": 2,
+                "speed": 6,
                 "direction": "none",
                 "random": false,
                 "straight": false,
@@ -66,6 +68,7 @@
                     "rotateY": 1200
                 }
             }
+            
         },
         "interactivity": {
             "detect_on": "canvas",
@@ -76,7 +79,7 @@
                 },
                 "onclick": {
                     "enable": true,
-                    "mode": "repulse"
+                    "mode": "push"
                 },
                 "resize": true
             },
@@ -108,4 +111,3 @@
         },
         "retina_detect": true
     });
-
