@@ -1,27 +1,73 @@
 <!DOCTYPE html>
-<html lang="en" xml:lang="en" xmlns= "http://www.w3.org/1999/xhtml">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <meta name="google" content="notranslate">
 <meta http-equiv="Content-Language" content="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raafey Raza</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Raafey Raza</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
+
+<style>
+  body {
+    scroll-behavior: smooth;
+  }
+</style>
+
 <body>
-    <div id="particles-js-container">
-        <div id="particles-js"></div>
+  <div id="particles-js-container">
+    <div id="particles-js"></div>
+  </div>
+  <div class="scroll-container">
+    <!-- SECTION 1 -->
+    <div class="section" id="main">
+      <!-- Curtain menu -->
+      <!-- The overlay -->
+      <div id="myNav" class="overlay">
+
+        <!-- Button to close the overlay navigation -->
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+        <!-- Overlay content -->
+        <div class="overlay-content">
+          <a href="#main" onclick="closeNav()">Main</a>
+          <a href="#about-me" onclick="closeNav()">About</a>
+          <a href="#portfolio" onclick="closeNav()">Portfolio</a>
+          <a href="#contact" onclick="closeNav()">Contact</a>
+          <a href="#socials" onclick="closeNav()">Socials</a>
+        </div>
+
       </div>
-      
+
+      <!-- Use any element to open/show the overlay navigation menu -->
+      <span onclick="openNav()"><i class="fa fa-bars"></i></span>
       <!-- icons -->
       <div class="icon-container">
         <div class="icon" id="icon"></div>
         <div class="image" id="image"></div>
       </div>
       <!-- name -->
-      <div class="name"><b>Raafey Raza</b></div>
+      <div class="nation">
+        <div class="name"><b>Raafey Raza</b></div>
+        <div class="description">Student by day, Programmer by night</div>
+      </div>
+      <div class="downarrow"><button id="down">▼</button></div>
     </div>
+
+    <!-- SECTION 2 -->
+    <div class="section" id="about-me">
+      <div class="portfolio"></div>
+    </div>
+    <div class="section" id="portfolio"></div>
+    <div class="section" id="contact"></div>
+    <div class="section" id="socials"></div>
+  </div>
 </body>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="script.js"></script>
+
 </html>
