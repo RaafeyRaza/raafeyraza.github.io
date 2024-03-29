@@ -51,11 +51,11 @@
   }
   
   .icon-container:hover .icon {
-    transform: rotateY(-180deg); /* Flips the icon */
+    /*transform: rotateY(-180deg); /* Flips the icon */
   }
   
   .icon-container:hover .image {
-    transform: rotateY(0deg); /* Flips the profile picture */
+   /* transform: rotateY(0deg); /* Flips the profile picture */
   }
   
   /* Name */

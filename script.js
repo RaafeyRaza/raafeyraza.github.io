@@ -102,10 +102,17 @@ particlesJS("particles-js", {
   //transform the images icons
   document.getElementById("icon").addEventListener("click", function() {
     var image = document.getElementById("image");
-    if (image.style.transform === "rotateY(180deg)") {
-      image.style.transform = "rotateY(0deg)";
-    } else {
+    if (image.style.transform === "rotateY(0deg)") {
       image.style.transform = "rotateY(180deg)";
+    } else {
+      image.style.transform = "rotateY(0deg)";
     }
   });
-  
+  document.getElementById("image").addEventListener("click", function() {
+    var icon = document.getElementById("image");
+    if (icon.style.transform === "rotateY(0deg)") {
+       icon.style.transform = "rotateY(180deg)";
+    } else {
+       icon.style.transform = "rotateY(0deg)";
+    }
+   });
