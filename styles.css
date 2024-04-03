@@ -312,7 +312,9 @@ body {
     font-size: 18px; /* Adjust font size for even smaller screens */
   }
 }
-
+hr {
+  width:90%;
+}
 
 
 
