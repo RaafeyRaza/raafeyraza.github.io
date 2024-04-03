@@ -259,13 +259,13 @@ body {
 }
 
 /* Style all font awesome icons */
-.fa-bars{
+.fa{
   padding: 20px;
   font-size: 30px;
   width: 50px;
   text-align: center;
   text-decoration: none;
-  transition: 0.5s;
+  transition: 0.5s; 
 }
 
 /* Add a hover effect if you want */
