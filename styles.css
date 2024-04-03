@@ -179,7 +179,7 @@ body {
   width: 0;
   position: fixed;
   /* Stay in place */
-  z-index: 1;
+  z-index: 21;
   /* Sit on top */
   left: 0;
   top: 0;
@@ -259,17 +259,18 @@ body {
 }
 
 /* Style all font awesome icons */
-.fa {
+.fa-bars{
   padding: 20px;
   font-size: 30px;
   width: 50px;
   text-align: center;
   text-decoration: none;
+  transition: 0.5s;
 }
 
 /* Add a hover effect if you want */
-.fa:hover {
-  opacity: 0.7;
+.fa-bars:hover {
+  color: yellow;
 }
 
 /* Set a specific color for each brand */
@@ -316,5 +317,58 @@ hr {
   width:90%;
 }
 
+.contact-form {
+ width: 80%;
+ max-width: 800px;
+ margin: 0 auto;
+ margin-top:5%;
+ padding: 20px;
+ background-color: rgba(0, 0, 0, 0.7); /* Slightly darker background for better contrast */
+ border-radius: 10px; /* Rounded corners for aesthetics */
+ color: white; /* Text color */
+}
 
+.contact-form h2 {
+ text-align: center;
+ margin-bottom: 20px;
+}
+
+.contact-form label {
+ display: block;
+ margin-bottom: 5px;
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+ width: 100%;
+ padding: 10px;
+ margin-bottom: 20px;
+ border: 2px solid #eeff00; /* Added border to text fields */
+ border-radius: 5px; /* Rounded corners for aesthetics */
+ background-color: rgba(255, 255, 255, 0.1); /* Light background for input fields */
+ color: white; /* Text color */
+ resize:none; 
+}
+.contact-form textarea {
+  height: 150px;
+}
+
+.contact-form input[type="submit"] {
+ width: 100%;
+ padding: 10px;
+ border: none;
+ border-radius: 5px;
+ background-color: #eeff00; /* Button color */
+ color: black; /* Button text color */
+ cursor: pointer;
+ transition: 0.3s ease-in-out;
+}
+
+.contact-form input[type="submit"]:hover {
+ background-color: #ffffff; /* Button hover color */
+ color: black; /* Button text color on hover */
+ transform: background-color(#ffffff);
+ transition: 0.3s;
+}
 

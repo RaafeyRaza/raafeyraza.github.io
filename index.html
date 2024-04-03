@@ -59,11 +59,28 @@
     </div>
     <hr>
     <div class="section" id="portfolio"></div>
-    <div class="section" id="contact"></div>
+    <hr>
+    <div class="section" id="contact">
+      <div class="contact-form">
+        <h2>Contact Me</h2>
+        <form>
+          <label for="name">Name:</label><br>
+          <input type="text" id="name" name="name"><br>
+          <label for="email">Email:</label><br>
+          <input type="email" id="email" name="email"><br>
+          <label for="message">Message:</label><br>
+          <textarea id="message" name="message" required maxlength="1000" oninput="updateCharCount()"></textarea><br>
+          <span id="char-count">0 / 1000</span>
+          <input type="submit" value="Submit">
+        </form>
+      </div>
+    </div>
+    <hr>
     <div class="section" id="socials">
       <a href="#" class="fa fa-facebook"></a>
       <a href="#" class="fa fa-spotify"></a>
     </div>
+    
   </div>
 </body>
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>

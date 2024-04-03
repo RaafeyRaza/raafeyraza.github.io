@@ -153,3 +153,9 @@ $(document).ready(function () {
     } // End if
   });
 });
+// char count for text field
+function updateCharCount() {
+  var message = document.getElementById('message');
+  var charCount = document.getElementById('char-count');
+  charCount.textContent = message.value.length + ' / 1000';
+ }
