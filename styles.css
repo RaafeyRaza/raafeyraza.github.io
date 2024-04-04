@@ -90,7 +90,7 @@ body {
 }
 
 .image {
-  background-image: url('./img/ProfilePicture.png');
+  background-image: url('./img/ProfilePictures.png');
   /* Your profile picture */
   transform: rotateY(180deg);
   /* Initially flipped */
@@ -271,7 +271,7 @@ body {
   text-decoration: none;
   transition: 0.5s;
 }
-.fa:hover {
+.socialbuttons .fa:hover {
   opacity:0.7;
 }
 .fa:active {
@@ -364,6 +364,22 @@ body {
     /* Adjust font size for even smaller screens */
   }
 }
+@media screen and (max-width: 768px) {
+  .socialbuttons .fa {
+    font-size: 15px; /* Reduce the size of the buttons for smaller screens */
+  }
+  
+  .socialbuttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .socialbuttons a {
+    flex-basis: calc(50% - 20px); /* Set the width of each button to 50% minus some spacing */
+    margin: 10px; /* Add some margin between buttons */
+  }
+}
 
 hr {
   width: 90%;
@@ -435,6 +451,21 @@ hr {
   /* Button text color on hover */
   transform: background-color(#ffffff);
   transition: 0.3s;
+}
+
+@media screen and (max-width: 768px) {
+  .fa {
+    font-size: 15px;
+
+    /* Adjust font size for smaller screens */
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .fa {
+    font-size: 10px;
+    /* Adjust font size for even smaller screens */
+  }
 }
 
 .socialbuttons{
