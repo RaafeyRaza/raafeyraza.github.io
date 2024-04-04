@@ -171,6 +171,10 @@ body {
   height: 100px;
 }
 
+#down:hover {
+  color: yellow;
+}
+
 /* Curtain Menu styles */
 /* The Overlay (background) */
 .overlay {
@@ -255,20 +259,25 @@ body {
   margin-top: 5px;
   font-size: 2em !important;
   position: fixed;
-  z-index:20;
+  z-index: 20;
 }
 
 /* Style all font awesome icons */
-.fa{
+.fa {
   padding: 20px;
   font-size: 30px;
   width: 50px;
   text-align: center;
   text-decoration: none;
-  transition: 0.5s; 
+  transition: 0.5s;
 }
-
-/* Add a hover effect if you want */
+.fa:hover {
+  transform: scale(1.5);
+}
+.fa:active {
+  transform: scale(1.2);
+}
+/* Hover effect for hambuger menu */
 .fa-bars:hover {
   color: yellow;
 }
@@ -281,94 +290,174 @@ body {
   color: white;
 }
 
-/* youtube */
+/* spotify */
 .fa-spotify {
   background: #000000;
   color: rgb(41, 204, 0);
 }
+
+.fa-whatsapp {
+  color: rgb(255, 255, 255);
+  background-color:green;
+}
+
+.fa-snapchat-ghost {
+  background: #fffc00;
+  color: white;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.fa-instagram {
+  background: #6a43b3;
+  color: white;
+}
+.fa-github {
+  background-color: black;
+  color: white;
+}
+
+.fa-google {
+  background: #dd4b39;
+  color: white;
+}
+.fa-envelope {
+  color:white;
+  background-color: lightcoral;
+}
+
 .about-me-text {
-  position: relative; /* Ensure positioning is relative */
-  width: 80%; /* Adjust the width as needed */
-  max-width: 800px; /* Ensures the text does not become too wide on large screens */
-  text-align: center; /* Center the text within the element */
+  position: relative;
+  /* Ensure positioning is relative */
+  width: 80%;
+  /* Adjust the width as needed */
+  max-width: 800px;
+  /* Ensures the text does not become too wide on large screens */
+  text-align: center;
+  /* Center the text within the element */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: white; /* Adjust the color as needed */
-  font-size: 24px; /* Default font size */
-  line-height: 1.6; /* Adjust line height for readability */
-  padding: 20px; /* Adds some space around the text */
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for readability */
-  border-radius: 10px; /* Rounded corners for aesthetics */
+  color: white;
+  /* Adjust the color as needed */
+  font-size: 24px;
+  /* Default font size */
+  line-height: 1.6;
+  /* Adjust line height for readability */
+  padding: 20px;
+  /* Adds some space around the text */
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Semi-transparent background for readability */
+  border-radius: 10px;
+  /* Rounded corners for aesthetics */
 }
 
 @media screen and (max-width: 768px) {
   .about-me-text {
-    font-size: 20px; /* Adjust font size for smaller screens */
+    font-size: 20px;
+    /* Adjust font size for smaller screens */
   }
 }
 
 @media screen and (max-width: 576px) {
   .about-me-text {
-    font-size: 18px; /* Adjust font size for even smaller screens */
+    font-size: 18px;
+    /* Adjust font size for even smaller screens */
   }
 }
+
 hr {
-  width:90%;
+  width: 90%;
 }
 
 .contact-form {
- width: 80%;
- max-width: 800px;
- margin: 0 auto;
- margin-top:5%;
- padding: 20px;
- background-color: rgba(0, 0, 0, 0.7); /* Slightly darker background for better contrast */
- border-radius: 10px; /* Rounded corners for aesthetics */
- color: white; /* Text color */
+  width: 80%;
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 5%;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.7);
+  /* Slightly darker background for better contrast */
+  border-radius: 10px;
+  /* Rounded corners for aesthetics */
+  color: white;
+  /* Text color */
 }
 
+
 .contact-form h2 {
- text-align: center;
- margin-bottom: 20px;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .contact-form label {
- display: block;
- margin-bottom: 5px;
+  display: block;
+  margin-bottom: 5px;
 }
 
 .contact-form input[type="text"],
 .contact-form input[type="email"],
 .contact-form textarea {
- width: 100%;
- padding: 10px;
- margin-bottom: 20px;
- border: 2px solid #eeff00; /* Added border to text fields */
- border-radius: 5px; /* Rounded corners for aesthetics */
- background-color: rgba(255, 255, 255, 0.1); /* Light background for input fields */
- color: white; /* Text color */
- resize:none; 
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 2px solid #eeff00;
+  /* Added border to text fields */
+  border-radius: 5px;
+  /* Rounded corners for aesthetics */
+  background-color: rgba(255, 255, 255, 0.1);
+  /* Light background for input fields */
+  color: white;
+  /* Text color */
+  resize: none;
 }
+
 .contact-form textarea {
   height: 150px;
 }
 
 .contact-form input[type="submit"] {
- width: 100%;
- padding: 10px;
- border: none;
- border-radius: 5px;
- background-color: #eeff00; /* Button color */
- color: black; /* Button text color */
- cursor: pointer;
- transition: 0.3s ease-in-out;
+  width: 100%;
+  padding: 10px;
+  border: 2px solid yellow;
+  border-radius: 5px;
+  background-color: #eeff00;
+  /* Button color */
+  color: black;
+  /* Button text color */
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
 }
 
 .contact-form input[type="submit"]:hover {
- background-color: #ffffff; /* Button hover color */
- color: black; /* Button text color on hover */
- transform: background-color(#ffffff);
- transition: 0.3s;
+  background-color: #ffffff;
+  /* Button hover color */
+  color: black;
+  /* Button text color on hover */
+  transform: background-color(#ffffff);
+  transition: 0.3s;
 }
 
+.socialbuttons{
+  position: relative;
+  /* Ensure positioning is relative */
+  width: 80%;
+  /* Adjust the width as needed */
+  max-width: 800px;
+  /* Ensures the text does not become too wide on large screens */
+  text-align: center;
+  /* Center the text within the element */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  /* Default font size */
+  line-height: 1.6;
+  /* Adjust line height for readability */
+  padding: 20px;
+  /* Adds some space around the buttons */
+  background-color:rgba(217, 255, 2, 0.205);
+  border-radius:50px;
+}
+.socialbuttons .fa {
+  border-radius:50px;
+}
