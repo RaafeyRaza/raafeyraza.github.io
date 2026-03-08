@@ -229,9 +229,3 @@ var cSlide = $('.slider #slide-'+$(this).attr('id'));
 )
 })
 
-// Dark-light theme toggle
-const btn = document.getElementById("themeBtn");
-
-btn.addEventListener("click", () => {
-  document.body.classList.toggle("light");
-});
