@@ -228,3 +228,8 @@ var cSlide = $('.slider #slide-'+$(this).attr('id'));
 })
 )
 })
+
+// Dark-light theme toggle
+function toggleTheme(){
+  document.body.classList.toggle("light")
+}
