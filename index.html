@@ -2,7 +2,11 @@
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <meta name="google" content="notranslate">
 <meta http-equiv="Content-Language" content="en">
-
+<script>
+function toggleTheme(){
+  document.body.classList.toggle("light");
+}
+</script>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,7 +32,7 @@
 
         <!-- Overlay content -->
         <div class="overlay-content">
-          <button id="themeBtn">Toggle Theme</button>
+          <button onclick="toggleTheme()">Theme</button>
           <a href="#main" onclick="closeNav()">Main</a>
           <a href="#about-me" onclick="closeNav()">About</a>
           <a href="#portfolio" onclick="closeNav()">Portfolio</a>
