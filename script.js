@@ -230,6 +230,8 @@ var cSlide = $('.slider #slide-'+$(this).attr('id'));
 })
 
 // Dark-light theme toggle
-function toggleTheme(){
-  document.body.classList.toggle("light")
-}
+const btn = document.getElementById("themeBtn");
+
+btn.addEventListener("click", () => {
+  document.body.classList.toggle("light");
+});
