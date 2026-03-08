@@ -31,7 +31,7 @@
   /* Color of the scroll thumb */
   border-radius: 20px;
   /* Optional: rounded scroll thumb */
-  border: 3px solid #eeff00;
+  border: 3px solid var(--accent);
   /* Optional: creates padding around scroll thumb */
 }
 
@@ -248,7 +248,7 @@ body {
 /* When you mouse over the navigation links, change their color */
 .overlay a:hover,
 .overlay a:focus {
-  color: #eeff00;
+  color: var(--accent);
 }
 
 /* Position the close button (top right corner) */
@@ -435,7 +435,7 @@ hr {
   width: 100%;
   padding: 10px;
   margin-bottom: 20px;
-  border: 2px solid #eeff00;
+  border: 2px solid var(--accent);
   /* Added border to text fields */
   border-radius: 5px;
   /* Rounded corners for aesthetics */
@@ -455,7 +455,7 @@ hr {
   padding: 10px;
   border: 2px solid yellow;
   border-radius: 5px;
-  background-color: #eeff00;
+  background-color: var(--accent);
   /* Button color */
   color: black;
   /* Button text color */
