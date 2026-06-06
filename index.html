@@ -6,7 +6,6 @@
 <title>Raafey</title>
 
 <style>
-/* ========== BASE ========== */
 *{
   margin:0;
   padding:0;
@@ -20,7 +19,7 @@ body{
   overflow-x:hidden;
 }
 
-/* subtle animated background noise */
+/* background glow */
 body::before{
   content:"";
   position:fixed;
@@ -29,16 +28,22 @@ body::before{
     radial-gradient(circle at 20% 20%, rgba(77,163,255,0.08), transparent 40%),
     radial-gradient(circle at 80% 70%, rgba(74,222,128,0.06), transparent 45%);
   pointer-events:none;
+  animation:floatBg 12s ease-in-out infinite alternate;
 }
 
-/* ========== LAYOUT ========== */
+@keyframes floatBg{
+  from{transform:translateY(0px);}
+  to{transform:translateY(-20px);}
+}
+
+/* layout */
 .container{
   max-width:900px;
   margin:0 auto;
   padding:100px 24px;
 }
 
-/* ========== HERO ========== */
+/* hero */
 h1{
   font-size:64px;
   letter-spacing:-2px;
@@ -65,7 +70,7 @@ h1{
   animation-delay:0.25s;
 }
 
-/* ========== SECTIONS ========== */
+/* sections */
 .section{
   margin-top:70px;
   opacity:0;
@@ -80,18 +85,38 @@ h1{
   margin-bottom:18px;
 }
 
-/* grid rows */
+/* rows */
 .row{
   display:flex;
   justify-content:space-between;
-  padding:10px 0;
+  padding:12px 0;
   border-bottom:1px solid rgba(255,255,255,0.05);
-  transition:0.2s ease;
+  transition:0.25s ease;
+  position:relative;
 }
 
+/* smarter hover variations */
+.row:nth-child(1):hover{ transform:translateX(6px); }
+.row:nth-child(2):hover{ transform:translateX(8px); }
+.row:nth-child(3):hover{ transform:translateX(10px); }
+
 .row:hover{
-  transform:translateX(6px);
   border-color:rgba(77,163,255,0.25);
+}
+
+.row::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:0;
+  width:0%;
+  height:1px;
+  background:#4da3ff;
+  transition:0.4s ease;
+}
+
+.row:hover::after{
+  width:100%;
 }
 
 .label{
@@ -103,21 +128,26 @@ h1{
   color:#9aa4b2;
   max-width:60%;
   text-align:right;
+  transition:0.2s ease;
 }
 
-/* thinking block */
+.row:hover .value{
+  color:#e5e7eb;
+}
+
+/* thinking */
 .think p{
   margin:10px 0;
   color:#9aa4b2;
-  transition:0.2s ease;
+  transition:0.25s ease;
 }
 
 .think p:hover{
   color:#e5e7eb;
-  transform:translateX(4px);
+  transform:translateX(6px);
 }
 
-/* contact */
+/* links */
 a{
   color:#4da3ff;
   text-decoration:none;
@@ -148,7 +178,7 @@ footer{
   justify-content:space-between;
 }
 
-/* ========== ANIMATION ========== */
+/* animations */
 @keyframes fadeUp{
   to{
     opacity:1;
@@ -156,14 +186,14 @@ footer{
   }
 }
 
-/* stagger trick */
+/* stagger */
 .section:nth-of-type(1){animation-delay:0.2s}
 .section:nth-of-type(2){animation-delay:0.3s}
 .section:nth-of-type(3){animation-delay:0.4s}
 .section:nth-of-type(4){animation-delay:0.5s}
 .section:nth-of-type(5){animation-delay:0.6s}
 
-/* responsiveness */
+/* responsive */
 @media (max-width:700px){
   h1{font-size:42px;}
   .row{
@@ -184,7 +214,7 @@ footer{
 
   <!-- HERO -->
   <h1>Raafey</h1>
-  <div class="sub">Builder of small things. Occasional overthinker.</div>
+  <div class="sub">Builder of small things. Occasional overthinker. Professional overcomplicator.</div>
   <div class="location">Lahore, Pakistan</div>
 
   <!-- WHAT I DO -->
@@ -193,17 +223,17 @@ footer{
 
     <div class="row">
       <div class="label">EAT</div>
-      <div class="value">Pizza, Cookies, Falafel</div>
+      <div class="value">Pizza, Cookies, Falafel. Mostly for survival.</div>
     </div>
 
     <div class="row">
       <div class="label">DRINK</div>
-      <div class="value">Coke, Coffee</div>
+      <div class="value">Tea, Coffee. Repeatedly.</div>
     </div>
 
     <div class="row">
       <div class="label">WORK</div>
-      <div class="value">Escalations Manager - Amazon</div>
+      <div class="value">Escalations Manager - Amazon. I deal with problems I didn’t create.</div>
     </div>
   </div>
 
@@ -211,9 +241,10 @@ footer{
   <div class="section think">
     <h2>HOW I THINK</h2>
 
-    <p>I prefer building over talking about building.</p>
-    <p>I care about things that actually work.</p>
-    <p>I avoid complexity unless it earns its place.</p>
+    <p>I automate things that were faster to do manually.</p>
+    <p>I question everything, including things that don’t need questioning.</p>
+    <p>I assume most things can be done better. Not always by me.</p>
+    <p>I spend a lot of time thinking about life and slightly less time improving it.</p>
     <p>I lose interest fast if something feels pointless.</p>
   </div>
 
@@ -223,17 +254,17 @@ footer{
 
     <div class="row">
       <div class="label">LEARNING</div>
-      <div class="value">backend basics, consistency</div>
+      <div class="value">backend development, consistency. slowly.</div>
     </div>
 
     <div class="row">
       <div class="label">IGNORING</div>
-      <div class="value">perfectionism, distractions</div>
+      <div class="value">my physical and mental health. temporarily, hopefully.</div>
     </div>
 
     <div class="row">
       <div class="label">BROKEN</div>
-      <div class="value">sleep schedule, discipline</div>
+      <div class="value">sleep schedule, mental peace. both under maintenance.</div>
     </div>
   </div>
 
@@ -242,13 +273,14 @@ footer{
     <h2>WORK</h2>
     <p style="color:#9aa4b2; line-height:1.6;">
       I don’t keep a public portfolio. Most things I build are experiments, not products.
+      Currently working as an Escalations Manager at Amazon. I solve problems I didn’t cause.
     </p>
   </div>
 
   <!-- CONTACT -->
   <div class="section">
     <h2>CONTACT</h2>
-    <p>Email: <a href="mailto:hello@raafey.me">hello@raafey.me</a></p>
+    <p>Email: <a href="mailto:contact@raafey.me">contact@raafey.me</a></p>
   </div>
 
   <footer>
