@@ -95,7 +95,6 @@ h1{
   position:relative;
 }
 
-/* smarter hover variations */
 .row:nth-child(1):hover{ transform:translateX(6px); }
 .row:nth-child(2):hover{ transform:translateX(8px); }
 .row:nth-child(3):hover{ transform:translateX(10px); }
@@ -119,10 +118,7 @@ h1{
   width:100%;
 }
 
-.label{
-  color:#cbd5e1;
-  font-weight:500;
-}
+.label{ color:#cbd5e1; font-weight:500; }
 
 .value{
   color:#9aa4b2;
@@ -178,7 +174,6 @@ footer{
   justify-content:space-between;
 }
 
-/* animations */
 @keyframes fadeUp{
   to{
     opacity:1;
@@ -196,16 +191,11 @@ footer{
 /* responsive */
 @media (max-width:700px){
   h1{font-size:42px;}
-  .row{
-    flex-direction:column;
-    gap:4px;
-  }
-  .value{
-    text-align:left;
-    max-width:100%;
-  }
+  .row{flex-direction:column; gap:4px;}
+  .value{text-align:left; max-width:100%;}
 }
-  /* cursor trail dots */
+
+/* cursor trail */
 .cursor-dot{
   position:fixed;
   width:6px;
@@ -218,6 +208,20 @@ footer{
   opacity:0.8;
   transform:translate(-50%, -50%);
 }
+
+/* mobile scroll finger */
+#scrollFinger{
+  position:fixed;
+  left:50%;
+  top:80%;
+  transform:translate(-50%,-50%);
+  font-size:28px;
+  opacity:0;
+  pointer-events:none;
+  z-index:9999;
+  filter:drop-shadow(0 0 10px #4da3ff);
+  transition:opacity 0.3s ease;
+}
 </style>
 </head>
 
@@ -225,35 +229,20 @@ footer{
 
 <div class="container">
 
-  <!-- HERO -->
   <h1>Raafey</h1>
   <div class="sub">Builder of small things. Occasional overthinker. Professional overcomplicator.</div>
   <div class="location">Lahore, Pakistan</div>
 
-  <!-- WHAT I DO -->
   <div class="section">
     <h2>WHAT I DO</h2>
 
-    <div class="row">
-      <div class="label">EAT</div>
-      <div class="value">Pizza, Cookies, Falafel.</div>
-    </div>
-
-    <div class="row">
-      <div class="label">DRINK</div>
-      <div class="value">Tea, Coffee. Repeatedly.</div>
-    </div>
-
-    <div class="row">
-      <div class="label">WORK</div>
-      <div class="value">Escalations Manager - Amazon.</div>
-    </div>
+    <div class="row"><div class="label">EAT</div><div class="value">Pizza, Cookies, Falafel.</div></div>
+    <div class="row"><div class="label">DRINK</div><div class="value">Tea, Coffee. Repeatedly.</div></div>
+    <div class="row"><div class="label">WORK</div><div class="value">Escalations Manager - Amazon.</div></div>
   </div>
 
-  <!-- THINKING -->
   <div class="section think">
     <h2>HOW I THINK</h2>
-
     <p>I automate things that were faster to do manually.</p>
     <p>I question everything, including things that don’t need questioning.</p>
     <p>I assume most things can be done better. Not always by me.</p>
@@ -261,27 +250,14 @@ footer{
     <p>I lose interest fast if something feels pointless.</p>
   </div>
 
-  <!-- CURRENT -->
   <div class="section">
     <h2>CURRENT STATE</h2>
 
-    <div class="row">
-      <div class="label">LEARNING</div>
-      <div class="value">backend development, consistency.</div>
-    </div>
-
-    <div class="row">
-      <div class="label">IGNORING</div>
-      <div class="value">my physical and mental health.</div>
-    </div>
-
-    <div class="row">
-      <div class="label">BROKEN</div>
-      <div class="value">sleep schedule, mental peace.</div>
-    </div>
+    <div class="row"><div class="label">LEARNING</div><div class="value">backend development, consistency.</div></div>
+    <div class="row"><div class="label">IGNORING</div><div class="value">my physical and mental health.</div></div>
+    <div class="row"><div class="label">BROKEN</div><div class="value">sleep schedule, mental peace.</div></div>
   </div>
 
-  <!-- WORK -->
   <div class="section">
     <h2>WORK</h2>
     <p style="color:#9aa4b2; line-height:1.6;">
@@ -290,7 +266,6 @@ footer{
     </p>
   </div>
 
-  <!-- CONTACT -->
   <div class="section">
     <h2>CONTACT</h2>
     <p>Email: <a href="mailto:contact@raafey.me">contact@raafey.me</a></p>
@@ -302,48 +277,76 @@ footer{
   </footer>
 
 </div>
+
+<!-- mobile indicator -->
+<div id="scrollFinger">☝️</div>
+
 <script>
-const dots = [];
-const maxDots = 12; // trail length
+const isTouch = matchMedia("(pointer: coarse)").matches || "ontouchstart" in window;
 
-for(let i=0;i<maxDots;i++){
-  const d = document.createElement("div");
-  d.className = "cursor-dot";
-  document.body.appendChild(d);
-  dots.push({el:d,x:0,y:0});
-}
+/* ---------------- CURSOR TRAIL (desktop only) ---------------- */
+if (!isTouch) {
+  const dots = [];
+  const maxDots = 12;
 
-let mouse = {x:0,y:0};
+  for (let i = 0; i < maxDots; i++) {
+    const d = document.createElement("div");
+    d.className = "cursor-dot";
+    document.body.appendChild(d);
+    dots.push({ el: d, x: 0, y: 0 });
+  }
 
-window.addEventListener("mousemove", e=>{
-  mouse.x = e.clientX;
-  mouse.y = e.clientY;
-});
+  let mouse = { x: 0, y: 0 };
 
-function animate(){
-  let x = mouse.x;
-  let y = mouse.y;
-
-  dots.forEach((dot, i)=>{
-    dot.x += (x - dot.x) * 0.3;
-    dot.y += (y - dot.y) * 0.3;
-
-    dot.el.style.left = dot.x + "px";
-    dot.el.style.top = dot.y + "px";
-
-    // trailing effect
-    x = dot.x;
-    y = dot.y;
-
-    // fade smaller
-    dot.el.style.scale = 1 - i * 0.05;
-    dot.el.style.opacity = 1 - i * 0.08;
+  window.addEventListener("mousemove", e => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
   });
 
-  requestAnimationFrame(animate);
+  function animate() {
+    let x = mouse.x;
+    let y = mouse.y;
+
+    dots.forEach((dot, i) => {
+      dot.x += (x - dot.x) * 0.3;
+      dot.y += (y - dot.y) * 0.3;
+
+      dot.el.style.left = dot.x + "px";
+      dot.el.style.top = dot.y + "px";
+
+      x = dot.x;
+      y = dot.y;
+
+      dot.el.style.transform = `translate(-50%, -50%) scale(${1 - i * 0.05})`;
+      dot.el.style.opacity = 1 - i * 0.08;
+    });
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
 }
 
-animate();
+/* ---------------- MOBILE SCROLL FINGER ---------------- */
+if (isTouch) {
+  const finger = document.getElementById("scrollFinger");
+  const sections = document.querySelectorAll(".section");
+
+  finger.style.opacity = 0.8;
+
+  const update = () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.body.scrollHeight - window.innerHeight;
+    const progress = scrollTop / docHeight;
+
+    finger.style.top = `${80 - progress * 30}%`;
+    finger.style.transform = `translate(-50%, -50%) rotate(${progress * 20}deg)`;
+  };
+
+  window.addEventListener("scroll", update);
+  update();
+}
 </script>
+
 </body>
 </html>
