@@ -205,6 +205,19 @@ footer{
     max-width:100%;
   }
 }
+  /* cursor trail dots */
+.cursor-dot{
+  position:fixed;
+  width:6px;
+  height:6px;
+  background:#4da3ff;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:9999;
+  box-shadow:0 0 8px #4da3ff, 0 0 16px #4da3ff;
+  opacity:0.8;
+  transform:translate(-50%, -50%);
+}
 </style>
 </head>
 
@@ -223,7 +236,7 @@ footer{
 
     <div class="row">
       <div class="label">EAT</div>
-      <div class="value">Pizza, Cookies, Falafel. Mostly for survival.</div>
+      <div class="value">Pizza, Cookies, Falafel.</div>
     </div>
 
     <div class="row">
@@ -233,7 +246,7 @@ footer{
 
     <div class="row">
       <div class="label">WORK</div>
-      <div class="value">Escalations Manager - Amazon. I deal with problems I didn’t create.</div>
+      <div class="value">Escalations Manager - Amazon.</div>
     </div>
   </div>
 
@@ -254,17 +267,17 @@ footer{
 
     <div class="row">
       <div class="label">LEARNING</div>
-      <div class="value">backend development, consistency. slowly.</div>
+      <div class="value">backend development, consistency.</div>
     </div>
 
     <div class="row">
       <div class="label">IGNORING</div>
-      <div class="value">my physical and mental health. temporarily, hopefully.</div>
+      <div class="value">my physical and mental health.</div>
     </div>
 
     <div class="row">
       <div class="label">BROKEN</div>
-      <div class="value">sleep schedule, mental peace. both under maintenance.</div>
+      <div class="value">sleep schedule, mental peace.</div>
     </div>
   </div>
 
@@ -289,6 +302,48 @@ footer{
   </footer>
 
 </div>
+<script>
+const dots = [];
+const maxDots = 12; // trail length
 
+for(let i=0;i<maxDots;i++){
+  const d = document.createElement("div");
+  d.className = "cursor-dot";
+  document.body.appendChild(d);
+  dots.push({el:d,x:0,y:0});
+}
+
+let mouse = {x:0,y:0};
+
+window.addEventListener("mousemove", e=>{
+  mouse.x = e.clientX;
+  mouse.y = e.clientY;
+});
+
+function animate(){
+  let x = mouse.x;
+  let y = mouse.y;
+
+  dots.forEach((dot, i)=>{
+    dot.x += (x - dot.x) * 0.3;
+    dot.y += (y - dot.y) * 0.3;
+
+    dot.el.style.left = dot.x + "px";
+    dot.el.style.top = dot.y + "px";
+
+    // trailing effect
+    x = dot.x;
+    y = dot.y;
+
+    // fade smaller
+    dot.el.style.scale = 1 - i * 0.05;
+    dot.el.style.opacity = 1 - i * 0.08;
+  });
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+</script>
 </body>
 </html>
