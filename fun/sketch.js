@@ -1,193 +1,411 @@
-let buffer, creature, bubbles, center;
+const hueBase = 60
+const hueRange = 160
+const segmentCount = 60
+const bubbleCount = 500
+const segmentLengthBase = 5
 
-const hueBase = 60;
-const hueRange = 160;
-const segmentCount = 60;
-const bubbleCount = 500;
-const segmentLengthBase = 5;
-
-const fadeIn = (t, m) => t / m;
-const fadeOut = (t, m) => (m - t) / m;
-const fadeInOut = (t, m) => Math.abs(((t + m * 0.5) % m) - m * 0.5) / (m * 0.5);
-
-const angle = (x1, y1, x2, y2) => Math.atan2(y2 - y1, x2 - x1);
-
-// cheap replacement for simplex-noise (stable, no CDN)
-function noise3(x, y, z) {
-  return (Math.sin(x * 12.9898 + y * 78.233 + z * 37.719) * 43758.5453) % 1;
+const fadeIn = (t, m) => t / m
+const fadeOut = (t, m) => (m - t) / m
+const fadeInOut = (t, m) => {
+	let hm = 0.5 * m
+	return abs((t + hm) % m - hm) / hm
 }
+const angle = (x1, y1, x2, y2) => atan2(y2 - y1, x2 - x1)
 
-/* ---------------- ATTR ARRAY ---------------- */
+let buffer
+let canvas
+let creature
+let bubbles
+let center
+let simplex
 
 class AttributeArray {
-  constructor(count, attrs) {
-    this.count = count;
-    this.attrs = attrs;
-    this.spread = attrs.length;
-    this.values = new Float32Array(count * this.spread);
-  }
+	constructor(count, attrs) {
+		this.count = count
+		this.attrs = attrs
+		this.spread = attrs.length
+		this.values = new Float32Array(count * this.spread)
+	}
 
-  get length() {
-    return this.values.length;
-  }
+	get length() {
+		return this.values.length
+	}
 
-  set(a, i) {
-    this.values.set(a, i);
-  }
+	set(a, i, normalize = false) {
+		normalize && (i *= this.spread)
 
-  get(i) {
-    return this.values.slice(i, i + this.spread);
-  }
+		this.values.set(a, i)
+	}
 
-  map(cb) {
-    let j = 0;
-    for (let i = 0; i < this.length; i += this.spread, j++) {
-      this.set(cb(this.get(i), j), i);
-    }
-  }
+	get(i, normalize = false) {
+		normalize && (i *= this.spread)
 
-  reverseMap(cb) {
-    let j = this.count - 1;
-    for (let i = this.length - this.spread; i >= 0; i -= this.spread, j--) {
-      this.set(cb(this.get(i), j), i);
-    }
-  }
+		return this.values.slice(i, i + this.spread)
+	}
+
+	forEach(cb) {
+		let i = 0
+		let j = 0
+		
+		for (; i < this.length; i += this.spread, j++) {
+			cb(this.get(i), j, this)
+		}
+	}
+
+	map(cb) {
+		let i = 0
+		let j = 0
+
+		for (; i < this.length; i += this.spread, j++) {
+			this.set(cb(this.get(i), j, this), i)
+		}
+	}
+
+	reverseMap(cb) {
+		let i = this.length - this.spread
+		let j = this.count - 1
+
+		for (; i >= 0; i -= this.spread, j--) {
+			this.set(cb(this.get(i), j, this), i)
+		}
+	}
 }
-
-/* ---------------- BUBBLES ---------------- */
 
 class Bubbles extends AttributeArray {
-  constructor(count) {
-    super(count, ['x','y','vx','vy','s','d','h','l','ttl']);
-    this.init();
-    this.repelTarget = null;
-    this.repelThreshold = 200;
-  }
+	constructor(count) {
+		super(count, ['x', 'y', 'vx', 'vy', 's', 'd', 'h', 'l', 'ttl'])
 
-  init() {
-    this.map(() => [
-      random(-width * 0.25, width * 1.25),
-      random(height * 1.25),
-      random(-2, 2),
-      random(-4, -1),
-      random(2, 6),
-      random(2, 6),
-      random(180, 240),
-      random(0, 200),
-      random(500, 1000)
-    ]);
-  }
+		this.initPoints()
+		this.repelTarget = null
+		this.repelThreshold = 200
+	}
 
-  reset() {
-    return [
-      random(-width * 0.25, width * 1.25),
-      random(height * 1.25),
-      0,
-      random(-4, -1),
-      random(2, 6),
-      random(2, 6),
-      random(180, 240),
-      0,
-      random(500, 1000)
-    ];
-  }
+	setRepelTarget(target = null) {
+		this.repelTarget = target
+	}	
 
-  drawParticle(x,y,d,h,l,ttl) {
-    const ld = fadeInOut(l, ttl);
-    buffer.stroke(h, 50, 100, 0.5 * ld);
-    buffer.strokeWeight(1 + d * ld);
-    buffer.point(x, y);
-  }
+	initPoints() {
+		this.map(() => [
+			random(-0.25 * windowWidth, windowWidth * 1.25),
+			random(windowHeight * 1.25),
+			random(-2, 2),
+			random(-4, -1),
+			random(2, 6),
+			random(2, 6),
+			random(180, 240),
+			random(0, 200),
+			random(500, 1000)
+		])
+	}
 
-  update() {
-    this.map(v => {
-      let [x,y,vx,vy,s,d,h,l,ttl] = v;
+	reset() {
+		return [
+			random(-0.25 * windowWidth, windowWidth * 1.25),
+			random(windowHeight * 1.25),
+			0,
+			random(-4, -1),
+			random(2, 6),
+			random(2, 6),
+			random(180, 240),
+			0,
+			random(500, 1000)
+		]
+	}
 
-      const n = noise3(x * 0.0015, y * 0.0015, frameCount * 0.0015) * TWO_PI;
+	drawParticle(x, y, d, h, l, ttl) {
+		const ld = fadeInOut(l, ttl)
 
-      vx = lerp(vx, cos(n) * s, 0.15);
-      vy = lerp(vy, (sin(n) + 2) * -s, 0.15);
+		buffer.stroke(h, 50, 100, 0.5 * ld)
+		buffer.strokeWeight(1 + d * ld)
+		buffer.point(x, y)
+	}
 
-      if (this.repelTarget) {
-        const dx = x - this.repelTarget[0];
-        const dy = y - this.repelTarget[1];
-        const dist = Math.sqrt(dx*dx + dy*dy);
+	update() {
+		this.map(([x, y, vx, vy, s, d, h, l, ttl]) => {
+			const n = simplex.noise3D(x * 0.0015, y * 0.0015, frameCount * 0.0015) * TAU
 
-        if (dist < this.repelThreshold) {
-          vx += dx * 0.01;
-          vy += dy * 0.01;
-        }
-      }
+			vx = lerp(vx, cos(n) * s, 0.15)
+			vy = lerp(vy, (sin(n) + 2) * -s, 0.15)
 
-      x += vx;
-      y += vy;
-      l++;
+			if (
+				this.repelTarget &&
+				dist(x, y, ...this.repelTarget) < this.repelThreshold
+			) {
+				const theta = angle(x, y, ...this.repelTarget)
 
-      this.drawParticle(x,y,d,h,l,ttl);
+				vx = lerp(vx, vx - cos(theta) * s, 0.275)
+				vy = lerp(vy, vy - sin(theta) * s, 0.275)
+			}
+			
 
-      if (l > ttl || x < -50 || x > width + 50 || y < -50) {
-        return this.reset();
-      }
+			x = lerp(x, x + vx, 0.125)
+			y = lerp(y, y + vy, 0.125)
 
-      return [x,y,vx,vy,s,d,h,l,ttl];
-    });
-  }
+			l++
+
+			this.drawParticle(x, y, d, h, l, ttl)
+
+			if (
+				l > ttl								||
+				x > windowWidth + d		||
+				x < -d								||
+				y < -d
+			) {
+				return this.reset()
+			}
+
+			return [x, y, vx, vy, s, d, h, l, ttl]
+		})
+	}
 }
 
-/* ---------------- CREATURE (SIMPLIFIED BUT SAME LOOK) ---------------- */
+class Chain extends AttributeArray {
+	constructor(x, y, segmentNum, baseLength, baseDirection, additionalAttrs = []) {
+		super(segmentNum, ['x1', 'y1', 'x2', 'y2', 'l', 'd', ...additionalAttrs])
 
-class Creature {
-  constructor() {
-    this.pos = [width/2, height/2];
-    this.target = [...this.pos];
-  }
+		this.position = [x, y]
+		this.target = [x, y]
+		this.baseLength = baseLength
+		this.baseDirection = baseDirection
+	}
 
-  setTarget(t) {
-    this.target = t;
-  }
+	get segmentNum() {
+		return this.count
+	}
 
-  update() {
-    this.pos[0] = lerp(this.pos[0], this.target[0], 0.05);
-    this.pos[1] = lerp(this.pos[1], this.target[1], 0.05);
+	setTarget(arg) {
+		if (typeof arg === 'function') {
+			this.target = arg(this.target)
+		} else {
+			this.target = arg
+		}
+	}
 
-    buffer.stroke(180, 80, 100);
-    buffer.noFill();
-    buffer.ellipse(this.pos[0], this.pos[1], 40);
-  }
+	setPosition(arg) {
+		if (typeof arg === 'function') {
+			this.position = arg(this.position)
+		} else {
+			this.position = arg
+		}
+	}
+
+	mapSegments(cb, direction = 'forward') {
+		if (direction === 'backward') {
+			this.reverseMap(cb)
+		} else {
+			this.map(cb)
+		}
+	}
+
+	updateSegments(cb, direction = 'forward') {
+		let target = this.position
+
+		this.mapSegments(([x1, y1, x2, y2, l, d, ..._rest], i) => {
+			x1 = target[0]
+			y1 = target[1]
+
+			const [t, ...rest] = cb([x1, y1, x2, y2, l, d, ..._rest], i)
+			const _d = isNaN(t) ? d : t
+
+			x2 = x1 + l * cos(_d)
+			y2 = y1 + l * sin(_d)
+
+			target = [x2, y2]
+
+			return [x1, y1, x2, y2, l, _d, ...rest]
+		}, direction)
+	}
 }
 
-/* ---------------- P5 ---------------- */
+class Creature extends Chain {
+	constructor() {
+		super(
+			center[0],
+			center[1],
+			segmentCount,
+			segmentLengthBase,
+			0,
+			['h']
+		)
+	
+		this.follow = false
+
+		this.initSegments()
+	}
+
+	initSegments() {
+		let x1, y1, x2, y2, l, d, h
+
+		l = this.baseLength
+		d = this.baseDirection
+
+		this.mapSegments((_, i) => {
+			x1 = x2 || this.position[0]
+			y1 = y2 || this.position[1]
+			x2 = x1 - l * cos(d)
+			y2 = y1 - l * sin(d)
+			d += 0.1
+			l *= 1.01
+			h = hueBase + fadeOut(i, this.segmentNum) * hueRange
+
+			return [x1, y1, x2, y2, l, d, h]
+		})
+	}
+
+	updateTarget() {
+		if (!this.follow) {
+			const t = simplex.noise3D(
+				this.target[0] * 0.005,
+				this.target[1] * 0.005,
+				frameCount * 0.005
+			) * TAU
+
+			this.setTarget([
+				lerp(
+					this.target[0],
+					this.target[0] + 20 * (cos(t) + cos(frameCount * 0.05)),
+					0.25
+				),
+				lerp(
+					this.target[1],
+					this.target[1] + 20 * (sin(t) + sin(frameCount * 0.05)),
+					0.25
+				)
+			])
+		}
+
+		if (
+			this.position[0] > windowWidth + 500	||
+			this.position[0] < -500								||
+			this.position[1] > windowHeight + 500	||
+			this.position[1] < -500
+		) {
+			this.setTarget([...center])
+		}
+	}
+
+	update() {
+		this.setPosition([
+			lerp(this.position[0], this.target[0], 0.015),
+			lerp(this.position[1], this.target[1], 0.015)
+		])
+
+		this.updateTarget()
+		this.updateSegments(([x1, y1, x2, y2, l, d, h], i) => {
+			let n
+
+			n = simplex.noise3D(
+				x1 * 0.005,
+				y1 * 0.005,
+				(i + frameCount) * 0.005
+			)
+			d = angle(x1, y1, x2, y2) + (n * 0.075)
+
+			this.drawSegment(x1, y1, x2, y2, h, n, d, i)
+
+			return [d]
+		}, 'backward')
+	}
+
+	drawSegment(x1, y1, x2, y2, h, n, tn, i) {
+		const arcWidth = 6 + 30 * fadeIn(i, this.segmentNum)
+		const lineLength = 1.35 * arcWidth
+		const lineLeftX = x1 + lineLength * cos(tn + 0.85 + n)
+		const lineLeftY = y1 + lineLength * sin(tn + 0.85 + n)
+		const lineRightX = x1 + lineLength * cos(tn - 0.85 - n)
+		const lineRightY = y1 + lineLength * sin(tn - 0.85 - n)
+		const nubWidth = arcWidth * 0.35
+
+		buffer.strokeWeight(1 + fadeIn(i, this.segmentNum) * 4)
+		buffer.stroke(h, 100, 100, 0.1)
+		buffer.noFill()
+
+		buffer.line(
+			x1,
+			y1,
+			lineLeftX,
+			lineLeftY
+		)
+		buffer.ellipse(lineLeftX, lineLeftY, nubWidth)
+
+		buffer.line(
+			x1,
+			y1,
+			lineRightX,
+			lineRightY
+		)
+		buffer.ellipse(lineRightX, lineRightY, nubWidth)
+
+		buffer.line(x2, y2, x1, y1)
+		buffer.ellipse(x1, y1, arcWidth)
+	}
+}
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
-  colorMode(HSB);
+	buffer = createGraphics(windowWidth, windowHeight)	
+	buffer.colorMode(HSB)
 
-  buffer = createGraphics(windowWidth, windowHeight);
-  buffer.colorMode(HSB);
+	canvas = createCanvas(windowWidth, windowHeight)
+	canvas.mouseOver(mouseOver)
+	canvas.mouseOut(mouseOut)
 
-  center = [width/2, height/2];
+	frameRate(60)
 
-  creature = new Creature();
-  bubbles = new Bubbles(bubbleCount);
+	simplex = new window.SimplexNoise()
+	center = [0.5 * windowWidth, 0.5 * windowHeight]
 
-  frameRate(60);
+	creature = new Creature()
+	bubbles = new Bubbles(bubbleCount)
+}
+
+function drawGlow() {
+	drawingContext.save()
+	drawingContext.filter = 'blur(6px) brightness(200%)'
+	image(buffer, 0, 0)
+	drawingContext.restore()
+}
+
+function drawImage() {
+	drawingContext.save()
+	drawingContext.globalCompositeOperation = 'lighter'
+	image(buffer, 0, 0)
+	drawingContext.restore()
 }
 
 function draw() {
-  buffer.background(220, 70, 2);
+	buffer.background(220, 70, 2)
 
-  creature.update();
-  bubbles.repelTarget = creature.pos;
-  bubbles.update();
+	try {
+		creature.update()
+		bubbles.setRepelTarget(creature.position)
+		bubbles.update()
 
-  image(buffer, 0, 0);
-}
-
-function mouseMoved() {
-  creature.setTarget([mouseX, mouseY]);
+		drawGlow()
+		drawImage()
+	} catch (e) {
+		console.error(e)
+		noLoop()
+	}
 }
 
 function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
-  buffer.resizeCanvas(windowWidth, windowHeight);
+	resizeCanvas(windowWidth, windowHeight)
+	buffer.resizeCanvas(windowWidth, windowHeight)
+	
+	center = [0.5 * windowWidth, 0.5 * windowHeight]
+}
+
+function mouseMoved() {
+	creature.setTarget([
+		mouseX,
+		mouseY
+	])
+}
+
+function mouseOut() {
+	creature.follow = false
+}
+
+function mouseOver() {
+	creature.follow = true
 }
