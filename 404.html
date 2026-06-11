@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 - lost in space</title>
+
+<style>
+body{
+  margin:0;
+  background:#0b0f14;
+  color:#e5e7eb;
+  font-family: system-ui, -apple-system, sans-serif;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100vh;
+  overflow:hidden;
+}
+
+/* soft glow */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(77,163,255,0.08), transparent 40%),
+    radial-gradient(circle at 70% 70%, rgba(74,222,128,0.06), transparent 45%);
+  pointer-events:none;
+}
+
+/* container */
+.wrap{
+  text-align:center;
+  max-width:500px;
+  padding:20px;
+}
+
+/* big 404 */
+h1{
+  font-size:72px;
+  margin:0;
+  letter-spacing:-2px;
+}
+
+/* cat */
+.cat{
+  font-size:48px;
+  margin:20px 0;
+  display:inline-block;
+  animation:float 2.5s ease-in-out infinite alternate;
+}
+
+/* text */
+.sub{
+  color:#9aa4b2;
+  margin-top:10px;
+  line-height:1.5;
+}
+
+/* link */
+a{
+  display:inline-block;
+  margin-top:25px;
+  color:#4da3ff;
+  text-decoration:none;
+  position:relative;
+}
+
+a::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-3px;
+  width:0%;
+  height:1px;
+  background:#4da3ff;
+  transition:0.3s;
+}
+
+a:hover::after{
+  width:100%;
+}
+
+/* floating */
+@keyframes float{
+  from{ transform: translateY(0px); }
+  to{ transform: translateY(-10px); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+  <h1>404</h1>
+
+  <div class="cat" id="cat">=^.^=</div>
+
+  <div class="sub">
+    you weren’t supposed to be here.<br>
+    the page is gone.<br>
+    the cat is not helpful.
+  </div>
+
+  <a href="/">go back</a>
+</div>
+
+<script>
+// click = meow chaos
+const cat = document.getElementById("cat");
+
+const faces = [
+  "=^.^=",
+  "=^..^=",
+  "(=｀ェ´=)",
+  "(=ↀωↀ=)",
+  "(=^･ω･^=)",
+  "(=；ェ；=)"
+];
+
+cat.addEventListener("click", () => {
+  const random = faces[Math.floor(Math.random()*faces.length)];
+  cat.textContent = random;
+
+  // tiny wiggle
+  cat.style.transform = "scale(1.2)";
+  setTimeout(()=> cat.style.transform = "", 150);
+});
+</script>
+
+</body>
+</html>
