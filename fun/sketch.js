@@ -349,7 +349,7 @@ function setup() {
   canvas.mouseOver(mouseOver);
   canvas.mouseOut(mouseOut);
   frameRate(60);
-  simplex = new SimplexNoise.default();
+  simplex = new SimplexNoise();
   center = [0.5 * windowWidth, 0.5 * windowHeight];
   creature = new Creature();
   bubbles = new Bubbles(bubbleCount);
