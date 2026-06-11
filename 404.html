@@ -18,7 +18,6 @@ body{
   overflow:hidden;
 }
 
-/* soft glow */
 body::before{
   content:"";
   position:fixed;
@@ -29,21 +28,18 @@ body::before{
   pointer-events:none;
 }
 
-/* container */
 .wrap{
   text-align:center;
   max-width:500px;
   padding:20px;
 }
 
-/* big 404 */
 h1{
   font-size:72px;
   margin:0;
   letter-spacing:-2px;
 }
 
-/* cat */
 .cat{
   font-size:48px;
   margin:20px 0;
@@ -58,7 +54,7 @@ h1{
   line-height:1.5;
 }
 
-/* link */
+
 a{
   display:inline-block;
   margin-top:25px;
@@ -82,7 +78,7 @@ a:hover::after{
   width:100%;
 }
 
-/* floating */
+
 @keyframes float{
   from{ transform: translateY(0px); }
   to{ transform: translateY(-10px); }
@@ -107,7 +103,7 @@ a:hover::after{
 </div>
 
 <script>
-// click = meow chaos
+
 const cat = document.getElementById("cat");
 
 const faces = [
@@ -123,7 +119,6 @@ cat.addEventListener("click", () => {
   const random = faces[Math.floor(Math.random()*faces.length)];
   cat.textContent = random;
 
-  // tiny wiggle
   cat.style.transform = "scale(1.2)";
   setTimeout(()=> cat.style.transform = "", 150);
 });
