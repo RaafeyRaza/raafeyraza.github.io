@@ -1,6 +1,6 @@
 const hueBase = 60
 const hueRange = 160
-const segmentCount = 60
+const segmentCount = 70
 const bubbleCount = 500
 const segmentLengthBase = 5
 
@@ -77,7 +77,7 @@ class Bubbles extends AttributeArray {
 
 		this.initPoints()
 		this.repelTarget = null
-		this.repelThreshold = 200
+		this.repelThreshold = 100
 	}
 
 	setRepelTarget(target = null) {
@@ -351,7 +351,7 @@ function setup() {
 
 	frameRate(60)
 
-	simplex = new window.SimplexNoise()
+	simplex = new SimplexNoise()
 	center = [0.5 * windowWidth, 0.5 * windowHeight]
 
 	creature = new Creature()
