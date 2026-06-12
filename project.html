@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects</title>
+
+<style>
+body{
+  margin:0;
+  background:#0b0f14;
+  color:#e5e7eb;
+  font-family: system-ui, -apple-system, sans-serif;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100vh;
+  overflow:hidden;
+}
+
+/* background glow */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(77,163,255,0.08), transparent 40%),
+    radial-gradient(circle at 70% 70%, rgba(74,222,128,0.06), transparent 45%);
+  pointer-events:none;
+}
+
+.wrap{
+  text-align:center;
+  max-width:700px;
+  padding:20px;
+}
+
+h1{
+  font-size:48px;
+  margin-bottom:30px;
+  letter-spacing:-1px;
+}
+  h3{
+  font-size:48px;
+  margin-bottom:30px;
+  letter-spacing:-1px;
+}
+
+/* grid */
+.grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap:20px;
+}
+
+/* project cards */
+.card{
+  padding:25px;
+  border-radius:12px;
+  background: rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.05);
+  cursor:pointer;
+  position:relative;
+  transition:0.3s ease;
+  overflow:hidden;
+}
+
+/* hover lift + glow */
+.card:hover{
+  transform: translateY(-6px) scale(1.02);
+  border-color: rgba(77,163,255,0.4);
+  box-shadow: 0 10px 30px rgba(77,163,255,0.1);
+}
+
+/* animated underline */
+.card::after{
+  content:"";
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:0%;
+  height:2px;
+  background:#4da3ff;
+  transition:0.3s;
+}
+
+.card:hover::after{
+  width:100%;
+}
+
+/* ripple click */
+.card span{
+  position:relative;
+  z-index:2;
+}
+
+/* floating animation (subtle) */
+.card{
+  animation: float 4s ease-in-out infinite alternate;
+}
+
+.card:nth-child(2){ animation-delay:0.3s; }
+.card:nth-child(3){ animation-delay:0.6s; }
+.card:nth-child(4){ animation-delay:0.9s; }
+
+@keyframes float{
+  from{ transform: translateY(0px); }
+  to{ transform: translateY(-8px); }
+}
+
+/* back link */
+a{
+  display:inline-block;
+  margin-top:30px;
+  color:#4da3ff;
+  text-decoration:none;
+  position:relative;
+}
+
+a::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-3px;
+  width:0%;
+  height:1px;
+  background:#4da3ff;
+  transition:0.3s;
+}
+
+a:hover::after{
+  width:100%;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+  <h1>Projects</h1>
+  <h3>Some cool things I have worked on</h3>
+
+  <div class="grid">
+    <div class="card"><span>option 1</span></div>
+    <div class="card"><span>option 2</span></div>
+    <div class="card"><span>option 3</span></div>
+    <div class="card"><span>option 4</span></div>
+  </div>
+
+  <a href="/">go back</a>
+</div>
+
+<script>
+// click ripple effect (tiny but satisfying)
+document.querySelectorAll(".card").forEach(card=>{
+  card.addEventListener("click", e=>{
+    const ripple = document.createElement("div");
+    ripple.style.position="absolute";
+    ripple.style.width="10px";
+    ripple.style.height="10px";
+    ripple.style.background="rgba(77,163,255,0.4)";
+    ripple.style.borderRadius="50%";
+    ripple.style.left = e.offsetX + "px";
+    ripple.style.top = e.offsetY + "px";
+    ripple.style.transform="scale(0)";
+    ripple.style.transition="0.5s";
+    
+    card.appendChild(ripple);
+
+    setTimeout(()=> ripple.style.transform="scale(15)", 10);
+    setTimeout(()=> ripple.remove(), 500);
+  });
+});
+</script>
+
+</body>
+</html>
