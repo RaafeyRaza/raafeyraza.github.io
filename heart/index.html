@@ -17,7 +17,9 @@ img {
 
 <script src="https://nextparticle.nextco.de/nextparticle.min.js"></script>
 <script>
-var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 800;
+const isMobile =
+  window.matchMedia("(max-width: 768px)").matches &&
+  (navigator.maxTouchPoints > 0 || "ontouchstart" in window);
 var settings = {
   particleGap: isMobile ? 7 : 5,
   particleSize: isMobile ? 4 : 2,
