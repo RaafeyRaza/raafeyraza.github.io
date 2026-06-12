@@ -11,6 +11,7 @@ body {
 	padding: 0;
 	width: 100%;
 	height: 100%;
+	background-color: black;
 }
 
 #container_div {
@@ -265,7 +266,7 @@ function renderSpans() {
   for (var i=0; i<spans.length; i++) {
     var s = spans[i];
     if (s.visibility == "visible") {
-      ctx.strokeStyle = "#552500";
+      ctx.strokeStyle = "#ffffff";
       ctx.lineWidth = ".66";
       ctx.moveTo(s.p1.cx, s.p1.cy);
       ctx.lineTo(s.p2.cx, s.p2.cy);
