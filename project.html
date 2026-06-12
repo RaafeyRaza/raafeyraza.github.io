@@ -26,9 +26,9 @@ body::before{
   pointer-events:none;
 }
 
-/* main wrapper */
+/* wrapper */
 .wrap{
-  max-width:900px;
+  max-width:1100px;
   margin:0 auto;
   padding:60px 20px;
   text-align:center;
@@ -46,19 +46,26 @@ h3{
   opacity:0.8;
 }
 
-/* grid */
+/* FLEX LAYOUT */
 .grid{
-  display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap:16px;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:20px;
+  align-items:stretch;
 }
 
-/* cards */
+/* PROJECT CARDS */
 .card{
-  padding:20px;
-  border-radius:12px;
+  flex: 1 1 260px;
+  max-width: 320px;
+  min-width: 220px;
+  height: 180px;
+
+  border-radius:14px;
   background: rgba(255,255,255,0.03);
-  border:1px solid rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.06);
+
   cursor:pointer;
   position:relative;
   overflow:hidden;
@@ -68,22 +75,16 @@ h3{
   justify-content:center;
 
   transition:0.3s ease;
-  animation: float 4s ease-in-out infinite alternate;
 }
-
-/* stagger float */
-.card:nth-child(2){ animation-delay:0.3s; }
-.card:nth-child(3){ animation-delay:0.6s; }
-.card:nth-child(4){ animation-delay:0.9s; }
 
 /* hover effect */
 .card:hover{
   transform: translateY(-6px) scale(1.02);
   border-color: rgba(77,163,255,0.4);
-  box-shadow: 0 10px 30px rgba(77,163,255,0.1);
+  box-shadow: 0 10px 30px rgba(77,163,255,0.12);
 }
 
-/* underline effect */
+/* underline animation */
 .card::after{
   content:"";
   position:absolute;
@@ -99,10 +100,33 @@ h3{
   width:100%;
 }
 
-/* float animation */
-@keyframes float{
-  from{ transform: translateY(0px); }
-  to{ transform: translateY(-8px); }
+/* text inside card */
+.card span{
+  position:relative;
+  z-index:2;
+  font-size:16px;
+  font-weight:500;
+}
+
+/* ripple */
+.card-ripple{
+  position:absolute;
+  width:10px;
+  height:10px;
+  background:rgba(77,163,255,0.4);
+  border-radius:50%;
+  transform:scale(0);
+  transition:0.5s;
+  pointer-events:none;
+}
+
+/* mobile */
+@media (max-width:700px){
+  .card{
+    flex: 1 1 100%;
+    max-width:100%;
+    height:160px;
+  }
 }
 
 /* back link */
@@ -129,15 +153,21 @@ a:hover::after{
   width:100%;
 }
 
-/* mobile fix */
-@media (max-width:600px){
-  .wrap{
-    padding:40px 12px;
-  }
+/* ========================= */
+/* CURSOR TRAIL (ADDED ONLY) */
+/* ========================= */
 
-  .grid{
-    grid-template-columns: repeat(2, 1fr);
-  }
+.cursor-dot{
+  position:fixed;
+  width:6px;
+  height:6px;
+  background:#4da3ff;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:9999;
+  box-shadow:0 0 8px #4da3ff, 0 0 16px #4da3ff;
+  opacity:0.8;
+  transform:translate(-50%, -50%);
 }
 </style>
 </head>
@@ -149,32 +179,25 @@ a:hover::after{
   <h3>Some cool things I have worked on</h3>
 
   <div class="grid">
-    <div class="card"><span>option 1</span></div>
-    <div class="card"><span>option 2</span></div>
-    <div class="card"><span>option 3</span></div>
-    <div class="card"><span>option 4</span></div>
-    <div class="card"><span>option 5</span></div>
-    <div class="card"><span>option 6</span></div>
+    <div class="card"><span><a href="/heart">Project 1</a></span></div>
+    <div class="card"><span><a href="/spider">Project 2</a></span></div>
+    <div class="card"><span><a href="/eel">Project 3</a></span></div>
+    <div class="card"><span><a href="/cloth">Project 4</a></span></div>
+    <div class="card"><span><a href="/fluid">Project 5</a></span></div>
+    <div class="card"><span><a href="/#">Project 6</a></span></div>
   </div>
 
   <a href="/">go back</a>
 </div>
 
 <script>
-// ripple effect
 document.querySelectorAll(".card").forEach(card=>{
   card.addEventListener("click", e=>{
     const ripple = document.createElement("div");
+    ripple.className = "card-ripple";
 
-    ripple.style.position="absolute";
-    ripple.style.width="10px";
-    ripple.style.height="10px";
-    ripple.style.background="rgba(77,163,255,0.4)";
-    ripple.style.borderRadius="50%";
     ripple.style.left = e.offsetX + "px";
     ripple.style.top = e.offsetY + "px";
-    ripple.style.transform="scale(0)";
-    ripple.style.transition="0.5s";
 
     card.appendChild(ripple);
 
@@ -182,6 +205,56 @@ document.querySelectorAll(".card").forEach(card=>{
     setTimeout(()=> ripple.remove(), 500);
   });
 });
+</script>
+
+<!-- ========================= -->
+<!-- CURSOR TRAIL SCRIPT -->
+<!-- ========================= -->
+
+<script>
+const isTouch = matchMedia("(pointer: coarse)").matches || "ontouchstart" in window;
+
+if (!isTouch) {
+  const dots = [];
+  const maxDots = 12;
+
+  for (let i = 0; i < maxDots; i++) {
+    const d = document.createElement("div");
+    d.className = "cursor-dot";
+    document.body.appendChild(d);
+    dots.push({ el: d, x: 0, y: 0 });
+  }
+
+  let mouse = { x: 0, y: 0 };
+
+  window.addEventListener("mousemove", e => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+
+  function animate() {
+    let x = mouse.x;
+    let y = mouse.y;
+
+    dots.forEach((dot, i) => {
+      dot.x += (x - dot.x) * 0.3;
+      dot.y += (y - dot.y) * 0.3;
+
+      dot.el.style.left = dot.x + "px";
+      dot.el.style.top = dot.y + "px";
+
+      x = dot.x;
+      y = dot.y;
+
+      dot.el.style.transform = `translate(-50%, -50%) scale(${1 - i * 0.05})`;
+      dot.el.style.opacity = 1 - i * 0.08;
+    });
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+}
 </script>
 
 </body>
