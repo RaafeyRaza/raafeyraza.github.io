@@ -75,15 +75,35 @@ h3{
   justify-content:center;
 
   transition:0.3s ease;
+  background-size: cover;
+  background-position: center;
 }
-
+/* faded overlay */
+.card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: rgba(0,0,0,0.55);
+  z-index:1;
+  transition: background 0.3s ease;
+}
+.card span{
+  position:relative;
+  z-index:2;
+}
 /* hover effect */
 .card:hover{
   transform: translateY(-6px) scale(1.02);
   border-color: rgba(77,163,255,0.4);
   box-shadow: 0 10px 30px rgba(77,163,255,0.12);
 }
-
+.card:hover::before{
+  background: transparent;
+}
+a.card{
+  text-decoration:none;
+  color:inherit;
+}
 /* underline animation */
 .card::after{
   content:"";
@@ -153,10 +173,6 @@ a:hover::after{
   width:100%;
 }
 
-/* ========================= */
-/* CURSOR TRAIL (ADDED ONLY) */
-/* ========================= */
-
 .cursor-dot{
   position:fixed;
   width:6px;
@@ -178,17 +194,35 @@ a:hover::after{
   <h1>Projects</h1>
   <h3>Some cool things I have worked on</h3>
 
-  <div class="grid">
-    <div class="card"><span><a href="/heart">Project 1</a></span></div>
-    <div class="card"><span><a href="/spider">Project 2</a></span></div>
-    <div class="card"><span><a href="/eel">Project 3</a></span></div>
-    <div class="card"><span><a href="/cloth">Project 4</a></span></div>
-    <div class="card"><span><a href="/fluid">Project 5</a></span></div>
-    <div class="card"><span><a href="/#">Project 6</a></span></div>
-  </div>
+<div class="grid">
+  <a href="https://example.com" class="card" style="background-image:url('/img/cloth.png')">
+    <span>Project 1</span>
+  </a>
+
+  <a href="https://example.com" class="card" style="background-image:url('/img/spider.png')">
+    <span>Project 2</span>
+  </a>
+
+  <a href="https://example.com" class="card" style="background-image:url('/img/eel.png')">
+    <span>Project 3</span>
+  </a>
+
+  <a href="https://example.com" class="card" style="background-image:url('/img/heart.png')">
+    <span>Project 4</span>
+  </a>
+
+  <a href="https://example.com" class="card" style="background-image:url('/img/fluid.png')">
+    <span>Project 5</span>
+  </a>
+
+  <a href="https://example.com" class="card" style="background-image:url('/img/eel.png')">
+    <span>Project 6</span>
+  </a>
+</div>
 
   <a href="/">go back</a>
 </div>
+
 
 <script>
 document.querySelectorAll(".card").forEach(card=>{
