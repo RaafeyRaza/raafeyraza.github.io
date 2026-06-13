@@ -195,28 +195,28 @@ a:hover::after{
   <h3>Some cool things I have worked on</h3>
 
 <div class="grid">
-  <a href="https://example.com" class="card" style="background-image:url('/img/cloth.png')">
-    <span>Project 1</span>
+  <a href="cloth" class="card" style="background-image:url('/img/cloth.png')">
+    <span>Cloth</span>
   </a>
 
-  <a href="https://example.com" class="card" style="background-image:url('/img/spider.png')">
-    <span>Project 2</span>
+  <a href="spider" class="card" style="background-image:url('/img/spider.png')">
+    <span>Spider</span>
   </a>
 
-  <a href="https://example.com" class="card" style="background-image:url('/img/eel.png')">
-    <span>Project 3</span>
+  <a href="eel" class="card" style="background-image:url('/img/eel.png')">
+    <span>Water Eel</span>
   </a>
 
-  <a href="https://example.com" class="card" style="background-image:url('/img/heart.png')">
-    <span>Project 4</span>
+  <a href="/heart" class="card" style="background-image:url('/img/heart.png')">
+    <span>Heart</span>
   </a>
 
-  <a href="https://example.com" class="card" style="background-image:url('/img/fluid.png')">
-    <span>Project 5</span>
+  <a href="/fluid" class="card" style="background-image:url('/img/fluid.png')">
+    <span>Fluid</span>
   </a>
 
-  <a href="https://example.com" class="card" style="background-image:url('/img/eel.png')">
-    <span>Project 6</span>
+  <a href="/smoothfluid" class="card" style="background-image:url('/img/smoothfluid.png')">
+    <span>Smooth Fluid</span>
   </a>
 </div>
 
@@ -236,7 +236,7 @@ document.querySelectorAll(".card").forEach(card=>{
     card.appendChild(ripple);
 
     setTimeout(()=> ripple.style.transform="scale(15)", 10);
-    setTimeout(()=> ripple.remove(), 500);
+    setTimeout(()=> ripple.remove(), 1000);
   });
 });
 </script>
