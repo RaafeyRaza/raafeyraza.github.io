@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WOWW</title>
+<title>Eel</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: #000; overflow: hidden; }
+  body { background: #000000; overflow: hidden; }
   canvas { display: block; }
 </style>
 </head>
@@ -242,7 +242,7 @@ function drawImage() {
 }
 
 function draw() {
-  buffer.background(220, 70, 2)
+  buffer.background(0, 0, 0)
   try {
     creature.update()
     bubbles.setRepelTarget(creature.position)
