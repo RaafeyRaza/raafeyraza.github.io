@@ -185,6 +185,22 @@ a:hover::after{
   opacity:0.8;
   transform:translate(-50%, -50%);
 }
+
+@keyframes fadeUp{
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.wrap,h1,h3,.grid,a{
+  opacity:0;
+  animation:fadeUp .8s ease forwards;
+}
 </style>
 </head>
 
@@ -240,10 +256,6 @@ document.querySelectorAll(".card").forEach(card=>{
   });
 });
 </script>
-
-<!-- ========================= -->
-<!-- CURSOR TRAIL SCRIPT -->
-<!-- ========================= -->
 
 <script>
 const isTouch = matchMedia("(pointer: coarse)").matches || "ontouchstart" in window;
